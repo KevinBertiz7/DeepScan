@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+      - name: Install backend dependencies
+        working-directory: detector_malware_python/backend
+        run: npm install
+      - name: Run backend tests
+        working-directory: detector_malware_python/backend
+        run: npm test
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+      - name: Install frontend dependencies
+        working-directory: detector_malware_python/frontend
+        run: npm install
+      - name: Run frontend tests
+        working-directory: detector_malware_python/frontend
+        run: npm test
